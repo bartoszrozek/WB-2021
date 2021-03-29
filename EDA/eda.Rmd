@@ -28,11 +28,14 @@ colnames(housing)
 
 * longitude - długość geograficzna 
 * latitude - szerokość geograficzna 
-* housing median age - wiek domu
+* housing median age - mediana wieku domów w kwartale
 * total rooms - liczba pomieszczeń w mieszkaniu
 * total bedrooms - liczba sypialni w mieszkaniu
-* population - populacja miejscowości 
-* 
+* population - populacja w kwartale
+* households - liczba gospodarstw domowych w kwartale
+* medianIncome - mediana dochodu gospodarstw domowych z kwartału 
+* medianHouseValue - mediana wartości domów z kwartału
+* oceanProximity - ołożenie względem oceanu opisana jako jednak z kategorii: "NEAR BAY" "<1H OCEAN" "INLAND" "NEAR OCEAN" "ISLAND"  
 
 ```{r}
 head(housing)
@@ -56,9 +59,77 @@ count_plot
 
 ```
 
+
 ```{r}
 library(corrplot)
 
 DataExplorer::plot_correlation(housing)
+
+```
+```{r, message = FALSE, warnings = FALSE}
+library(ggplot2)
+
+
+
+ggplot(housing, aes(x=ocean_proximity, y=housing_median_age, fill=ocean_proximity))  +
+  geom_violin() + 
+  geom_boxplot(width=0.1) +
+  scale_fill_brewer(palette="PuOr") + 
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) ->p1
+
+ggplot(housing, aes(x=ocean_proximity, y=mean_rooms,fill=ocean_proximity)) + 
+  geom_violin() + 
+  geom_boxplot(width=0.1) +
+  scale_fill_brewer(palette="PuOr") + 
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))->p2
+
+ggplot(housing, aes(x=ocean_proximity, y=mean_bedrooms, fill=ocean_proximity)) + 
+  geom_violin() + 
+  geom_boxplot(width=0.1) +
+  scale_fill_brewer(palette="PuOr") + 
+  theme_minimal()+
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))->p3
+
+ggplot(housing, aes(x=ocean_proximity, y=population, fill=ocean_proximity)) + 
+  geom_violin() + 
+  geom_boxplot(width=0.1) +
+  scale_fill_brewer(palette="PuOr") + 
+  theme_minimal()+
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))->p4
+
+ggplot(housing, aes(x=ocean_proximity, y=households, fill=ocean_proximity)) + 
+  geom_violin() + 
+  geom_boxplot(width=0.1) +
+  scale_fill_brewer(palette="PuOr") + 
+  theme_minimal()+
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))->p5
+
+ggplot(housing, aes(x=ocean_proximity, y=median_income, fill=ocean_proximity)) + 
+  geom_violin() + 
+  geom_boxplot(width=0.1) +
+  scale_fill_brewer(palette="PuOr") + 
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))->p6
+
+ggplot(housing, aes(x=ocean_proximity, y=median_house_value, fill=ocean_proximity)) + 
+  geom_violin() + 
+  geom_boxplot(width=0.1) +
+  scale_fill_brewer(palette="PuOr") + 
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))->p7
+
+
+
+
+
+p1
+#p2
+#p3
+p4
+p5
+p6
+p7
 
 ```
