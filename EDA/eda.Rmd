@@ -28,11 +28,14 @@ colnames(housing)
 
 * longitude - długość geograficzna 
 * latitude - szerokość geograficzna 
-* housing median age - wiek domu
+* housing median age - mediana wieku domów w kwartale
 * total rooms - liczba pomieszczeń w mieszkaniu
 * total bedrooms - liczba sypialni w mieszkaniu
-* population - populacja miejscowości 
-* 
+* population - populacja w kwartale
+* households - liczba gospodarstw domowych w kwartale
+* medianIncome - mediana dochodu gospodarstw domowych z kwartału 
+* medianHouseValue - mediana wartości domów z kwartału
+* oceanProximity - położenie względem oceanu opisana jako jednak z kategorii: "NEAR BAY" "<1H OCEAN" "INLAND" "NEAR OCEAN" "ISLAND"  
 
 ```{r}
 head(housing)
@@ -42,6 +45,7 @@ head(housing)
 library(ggplot2)
 library(DataExplorer)
 library(ggpubr)
+library(ggmap)
 
 columns <- names(housing)
 columns <- columns[-8]
@@ -56,6 +60,7 @@ count_plot
 
 ```
 
+
 ```{r}
 library(corrplot)
 
@@ -63,19 +68,111 @@ DataExplorer::plot_correlation(housing)
 
 ```
 
-```{r}
+Największe korelacje między zmiennymi:
+
+* households ~ population
+* mean_room ~ mean_bedroom
+* median_house_value ~ median_income
+* longitude ~ latitude
+
+```{r, message = FALSE, warnings = FALSE}
+library(ggplot2)
+
+
+
+ggplot(housing, aes(x=ocean_proximity, y=housing_median_age, fill=ocean_proximity))  +
+  geom_violin() + 
+  geom_boxplot(width=0.1) +
+  scale_fill_brewer(palette="PuOr") + 
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) ->p1
+
+ggplot(housing, aes(x=ocean_proximity, y=mean_rooms,fill=ocean_proximity)) + 
+  geom_violin() + 
+  geom_boxplot(width=0.1) +
+  scale_fill_brewer(palette="PuOr") + 
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))->p2
+
+ggplot(housing, aes(x=ocean_proximity, y=mean_bedrooms, fill=ocean_proximity)) + 
+  geom_violin() + 
+  geom_boxplot(width=0.1) +
+  scale_fill_brewer(palette="PuOr") + 
+  theme_minimal()+
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))->p3
+
+ggplot(housing, aes(x=ocean_proximity, y=population, fill=ocean_proximity)) + 
+  geom_violin() + 
+  geom_boxplot(width=0.1) +
+  scale_fill_brewer(palette="PuOr") + 
+  theme_minimal()+
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))->p4
+
+ggplot(housing, aes(x=ocean_proximity, y=households, fill=ocean_proximity)) + 
+  geom_violin() + 
+  geom_boxplot(width=0.1) +
+  scale_fill_brewer(palette="PuOr") + 
+  theme_minimal()+
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))->p5
+
+ggplot(housing, aes(x=ocean_proximity, y=median_income, fill=ocean_proximity)) + 
+  geom_violin() + 
+  geom_boxplot(width=0.1) +
+  scale_fill_brewer(palette="PuOr") + 
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))->p6
+
+ggplot(housing, aes(x=ocean_proximity, y=median_house_value, fill=ocean_proximity)) + 
+  geom_violin() + 
+  geom_boxplot(width=0.1) +
+  scale_fill_brewer(palette="PuOr") + 
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))->p7
+
+
+
+
+
+p1
+#p2
+#p3
+p4
+p5
+p6
+p7
+
+```
+
+```{r, message=FALSE}
 us <- c(left = min(housing$longitude), bottom = min(housing$latitude), 
         right = max(housing$longitude), top = max(housing$latitude))
+
 p <- get_stamenmap(us, zoom = 7, maptype = "toner-lite") %>% ggmap() 
-
-p + geom_point(aes(x = longitude, y = latitude), data = housing, size = 0.5, color = "red")
-
-p + geom_point(aes(x = longitude, y = latitude,  colour = ocean_proximity), data = housing, size = 0.5) + 
-  theme(legend.position="bottom") 
-
-p + geom_point(aes(x = longitude, y = latitude, colour = median_house_value), data = housing, alpha=0.25, size = 0.75) + 
-  theme(legend.position="bottom") + 
-  scale_color_gradient2(midpoint=mean(housing$median_house_value), low="green", mid="yellow",
-                        high="red", space ="Lab" )
 ```
+
+
+```{r, fig.height=10, fig.align='center'}
+p + geom_point(data = housing, aes(x=longitude, y=latitude, color=median_house_value))+
+  ggtitle("Heatmap of median_house_value")+
+  theme_light()+
+  theme(legend.position="bottom", legend.direction = "vertical") 
+
+```
+
+```{r, fig.height=10, fig.align='center'}
+
+p +
+  geom_point(data = housing, aes(x=longitude, y=latitude, color=ocean_proximity), alpha=0.5, size=0.5)+
+  ggtitle("Ocean_proximity on map")+
+  theme_light()+
+  theme(legend.position="bottom", legend.direction = "horizontal")
+
+```
+
+```{r}
+a = dplyr ::filter(housing, ocean_proximity == 'ISLAND')
+length(a)
+```
+
+Podział kategorii zmiennej ocean_proximity i wizualizacja na mapie może wytłumaczyć dziwne wykresy skrzypcowe dla ocean_proximity=ISLAND. Jedynie dziesięć obserwacji ma taką wartość.
 
