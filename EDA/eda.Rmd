@@ -35,7 +35,7 @@ colnames(housing)
 * households - liczba gospodarstw domowych w kwartale
 * medianIncome - mediana dochodu gospodarstw domowych z kwartału 
 * medianHouseValue - mediana wartości domów z kwartału
-* oceanProximity - ołożenie względem oceanu opisana jako jednak z kategorii: "NEAR BAY" "<1H OCEAN" "INLAND" "NEAR OCEAN" "ISLAND"  
+* oceanProximity - położenie względem oceanu opisana jako jednak z kategorii: "NEAR BAY" "<1H OCEAN" "INLAND" "NEAR OCEAN" "ISLAND"  
 
 ```{r}
 head(housing)
@@ -66,6 +66,14 @@ library(corrplot)
 DataExplorer::plot_correlation(housing)
 
 ```
+
+Największe korelacje między zmiennymi:
+
+* households ~ population
+* mean_room ~ mean_bedroom
+* median_house_value ~ median_income
+* longitude ~ latitude
+
 ```{r, message = FALSE, warnings = FALSE}
 library(ggplot2)
 
@@ -133,3 +141,29 @@ p6
 p7
 
 ```
+
+```{r}
+
+ggplot(housing, aes(x=longitude, y=latitude, color=median_house_value))+
+  geom_point()+
+  ggtitle("Heatmap of median_house_value")+
+  theme_light()
+
+```
+
+```{r}
+
+ggplot(housing, aes(x=longitude, y=latitude, color=ocean_proximity))+
+  geom_point()+
+  ggtitle("Ocean_proximity on map")+
+  theme_light()
+
+```
+
+```{r}
+a = dplyr ::filter(housing, ocean_proximity == 'ISLAND')
+length(a)
+```
+
+Podział kategorii zmiennej ocean_proximity i wizualizacja na mapie może wytłumaczyć dziwne wykresy skrzypcowe dla ocean_proximity=ISLAND. Jedynie dziesięć obserwacji ma taką wartość.
+
