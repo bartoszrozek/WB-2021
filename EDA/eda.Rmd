@@ -179,3 +179,46 @@ length(a)
 
 Podział kategorii zmiennej ocean_proximity i wizualizacja na mapie może wytłumaczyć dziwne wykresy skrzypcowe dla ocean_proximity=ISLAND. Jedynie dziesięć obserwacji ma taką wartość.
 
+
+```{r, fig.align='center'}
+
+
+ggplot(data = housing, aes(x=households, y=population, color=median_house_value), alpha=0.5, size=0.5)+
+  geom_point()+
+  ggtitle("Households and population correlation")+
+  theme_light()+
+  stat_smooth(method = "lm", col = "red")+
+  theme(legend.position="bottom", legend.direction = "vertical")
+
+```
+
+```{r, fig.align='center'}
+
+
+ggplot(data = housing, aes(x=mean_rooms, y=mean_bedrooms, color=median_house_value), alpha=0.5, size=0.5)+
+  geom_point()+
+  ggtitle("Mean_room and mean_bedroom correlation")+
+  theme_light()+
+  stat_smooth(method = "lm", col = "red")+
+  theme(legend.position="bottom", legend.direction = "vertical")
+
+```
+
+```{r, fig.align='center'}
+
+
+ggplot(data = housing, aes(x=median_income, y=median_house_value), alpha=0.5, size=0.5)+
+  geom_point()+
+  ggtitle("Median_income and median_house_value correlation")+
+  theme_light()+
+  stat_smooth(method = "lm", col = "red")+
+  theme(legend.position="bottom", legend.direction = "vertical")
+
+```
+
+```{r}
+max(housing$median_house_value)
+
+```
+
+Ostatni wykres pokazuje nam, że zmienna celu została obcięta do wartości 500001.
