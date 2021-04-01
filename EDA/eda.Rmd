@@ -28,13 +28,13 @@ colnames(housing)
 
 * longitude - długość geograficzna 
 * latitude - szerokość geograficzna 
-* housing median age - mediana wieku domów w kwartale
+* housing median age - mediana wieku domów w dystrykcie
 * total rooms - liczba pomieszczeń w mieszkaniu
 * total bedrooms - liczba sypialni w mieszkaniu
-* population - populacja w kwartale
-* households - liczba gospodarstw domowych w kwartale
-* medianIncome - mediana dochodu gospodarstw domowych z kwartału 
-* medianHouseValue - mediana wartości domów z kwartału
+* population - populacja w dystrykcie
+* households - liczba gospodarstw domowych w dystrykcie
+* medianIncome - mediana dochodu gospodarstw domowych z dystryktu 
+* medianHouseValue - mediana wartości domów z dystryktu
 * oceanProximity - położenie względem oceanu opisana jako jednak z kategorii: "NEAR BAY" "<1H OCEAN" "INLAND" "NEAR OCEAN" "ISLAND"  
 
 ```{r}
