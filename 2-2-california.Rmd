@@ -12,6 +12,7 @@ With the development of artificial intelligence and machine learning, the use of
 
 Using algorithms, we would like to know what influenced the prediction result and how. We are not inclined to trust such a difficult and complicated activity to algorithms whose decisions are unclear to human. Therefore, in this paper we use Explainable Artificial Intelligence (XAI) methods to analyze the output of the  black-box model. 
 
+
 #### Data
 
 The data that was used was the "California Housing Data Set".
@@ -89,6 +90,30 @@ It follows that for the observations, the key variables are `median_income` and 
 
 
 #### Ceteris Paribus
+
+**Intuition**
+
+*Ceteris Paribus* is a phrase that comes from Latin. Word for word meaning is "other things equal", but in XAI much more meaningful translation would be "other things held constant". In fact, these few words describe this method deeply - we choose one variable from observation, change it's value, while other variables held constant and calculate new model's prediction. Output of this operation is a function that shows us how prediction changes.
+
+**Results**
+
+<center>
+ 
+```{r, echo=FALSE, fig.cap="Ceteris Paribus: first observation", out.width = '100%'}
+knitr::include_graphics("images/2-2-single-ceteris.png")
+```
+</center>
+
+Picture above shows *Ceteris Paribus* calculated for first observation of data set. As we can see, in most cases it is straight line with change for small values. *Households* and *population* profiles are similar, which seems to be reasonable, because not many people look for apartment in a remote area. *Latitude* and *longitude* profiles are vertical lines with one decrease. Hence, a region on map can separated where *median value* would be the highest. *Mean bedrooms* is hard to explain in the oposition to *mean rooms* where we can see that the more rooms the higher the value is. It stops at certain value, above which valuation doesn't change. *Median income* is almost linear function, which is understandable as rich people can afford expensive apartments.
+
+<center>
+ 
+```{r, echo=FALSE, fig.cap="Ceteris Paribus: first and 2000th observation", out.width = '100%'}
+knitr::include_graphics("images/2-2-double-ceteris.png")
+```
+</center>
+
+Next plot shows *Ceteris Paribus* calculated for two different observations. Specially two observations with massive difference in *median value* where chosen to observe what would change. Clear differences can be observed. Especially *latitude*, *mean bedrooms*, *mean rooms* and *population* shows major changes. Rest of variables have similar profiles, but these four are great example why shouldn't we draw conclusions about whole data set based on one *ceteris paribus* calculation.
 
 #### Local explanations conclusions
 
