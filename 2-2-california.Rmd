@@ -1,16 +1,40 @@
-##  Title  
+##  How the price of the house is influenced by neighborhood? XAI methods for interpretation the black box model
 
 *Authors: Klaudia Gruszkowska, Bartosz Jamroży, Bartosz Rożek (Warsaw University of Techcnology)*
 
 ### Abstract
 
-
 ### Introduction
+
+Being able to predict the potential price of a house is crucial for the real estate market. Therefore, over the years, many papers have been focused on improving prediction methods [@2-2-housingprediction-ml1;@2-2-housingprediction-ml2]. The main question regarding forecasts is what data influences the price. In addition to physical factors of the house, such as size, number of rooms, the condition of the building, the price is also influenced by the area in which the house is located. The neighborhood affects the price of the house and the house affects the value of the surrounding buildings. Thus, house price prediction models based on neighborhood data were created [@2-2-neighborhood1;@2-2-neighborhood2;@2-2-neighborhood3].
+
+With the development of artificial intelligence and machine learning, the use of this type of algorithm is gaining popularity in the field of forecasting house prices [@2-2-housingprediction-ml1]. Black-box models is an important part of machine learning. However, unlike glass-box models, they do not have a clear, human-readable way of determining predictions [@EMA]. So why do we use them when we have glass-box models at our disposal? The complexity  of black-box models is both an advantage and disadvantage at the same time. Due to it, we get better, more tailored predictions, but we also doom ourselves to the lack of precise information on how the given result was obtained.
+
+Using algorithms, we would like to know what influenced the prediction result and how. We are not inclined to trust such a difficult and complicated activity to algorithms whose decisions are unclear to human. Therefore, in this paper we use Explainable Artificial Intelligence (XAI) methods to analyze the output of the  black-box model. 
 
 
 ### Literature
 
-### Main results
+
+### Local explanations
+
+#### Break Down
+
+#### Lime
+
+#### Ceteris Paribus
+
+#### Local explanations conclusions
+
+
+### Global explanations
+
+#### Feature Importance
+
+#### PDP
+
+#### Global explanations conclusions
+
 
 ### Conclusion
 
