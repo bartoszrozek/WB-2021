@@ -12,6 +12,45 @@ With the development of artificial intelligence and machine learning, the use of
 
 Using algorithms, we would like to know what influenced the prediction result and how. We are not inclined to trust such a difficult and complicated activity to algorithms whose decisions are unclear to human. Therefore, in this paper we use Explainable Artificial Intelligence (XAI) methods to analyze the output of the  black-box model. 
 
+#### Data
+
+The data that was used was the "California Housing Data Set".
+This data was initially featured in the following paper:[@pace1997sparse].The data pertains to the houses found in a given California district and some summary stats about them based on the 1990 census data. Data is cleaned, contains no empty information.
+
+
+| Column title     | Description                                                                                                                    |
+|------------------|--------------------------------------------------------------------------------------------------------------------------------|
+| longitude        | A measure of how far west a house is; a higher value is farther west                                                           |
+| latitude         | A measure of how far north a house is; a higher value is farther north                                                         |
+| housingMedianAge | Median age of a house within a block; a lower number is a newer building                                                       |
+| totalRooms       | Total number of rooms within a block                                                                                           |
+| totalBedrooms    | Total number of bedrooms within a block                                                                                        |
+| population       | Total number of people residing within a block                                                                                 |
+| households       | Total number of households, a group of people residing within a home unit, for a block                                         |
+| medianIncome     | Median income for households within a block of houses (measured in tens of thousands of US Dollars)                            |
+| medianHouseValue | Median house value for households within a block (measured in US Dollars)                                                      |
+| oceanProximity   | Location relative to the ocean described as however in the category: "NEAR BAY", "<1H OCEAN", "INLAND", "NEAR OCEAN", "ISLAND" |
+
+
+```{r HeatmapOfMedianHouseValue, out.width="500", fig.align="center", echo=FALSE, fig.cap='Map of property distribution within the state of California. The brightness of the points reflects the price.'}
+knitr::include_graphics('images/2-2-HeatmapOfMedianHouseValue.png')
+```
+
+The map shows a density of bright blue dots in two locations, these are expensive properties located within two urban centers, Los Angeles, San Francisco, and San Diego.
+Also, more expensive properties are located along the Pacific coast.
+
+
+```{r OceanProximityOnMap, out.width="500", fig.align="center", echo=FALSE, fig.cap='Map of property distribution within the state of California. Colors show the value of the oceanProximity column.'}
+knitr::include_graphics('images/2-2-OceanProximityOnMap.png')
+```
+
+Property map, packing the OceanProximity feature. Properties with the NEAR BAY category colored blue, appear in only one grouping next to San Francisco, NEAR BAY means San Francisco Bay. Green category, ISLAND collects 10 properties located on one island near Los Angeles.
+
+#### Machine learning model
+
+A random forest model was used to predict property values[@breiman1999random]. This model does not require scaling of data or decoding of categorical data. This makes it easier to analyze the results.
+
+The two columns "total_bedrooms" and "total_rooms" were averaged by dividing by the number of household members. The new columns are "mean_bedrooms" and "mead_rooms". 
 
 ### Literature
 
