@@ -124,6 +124,30 @@ Next plot shows *Ceteris Paribus* calculated for two different observations. Spe
 
 #### PDP
 
+**Intuition**
+
+PDP stands for partial dependence plot and it is connected with *Ceteris Paribus*. We take a random sample from data set, and calculate *ceteris paribus* for each one. After that, mean of all these functions is calculated, which leaves us with one profile for whole data set. In the plot below thick blue line is PDP and thin grey lines are *Ceteris Paribus* calculations for each observation.
+
+**Results**
+
+<center>
+ 
+```{r, echo=FALSE, fig.cap="PPD", out.width = '100%'}
+knitr::include_graphics("images/2-2-pdp.png")
+```
+</center>
+
+As we can see, *households*, *mean bedrooms*, *mean rooms* and *population* profiles are almost straight lines with fluctuations for small values. *Housing median value* is a interesting case, because small curvature can be observed at the end of line. This is probably due to the fact that new apartments are expensive, because they are modern and old ones are expensive because of historical background behind they. *Latitude* shows that most expensive houses are located on south, especially below $34 ^{\circ} N$, in California this is area near Los Angeles. *Median house value* is highest for *longitude* values lower than $118 ^{\circ} E$ (majority of a state except of San Diego and surrounding area). As it was in *ceteris paribus*, *median income* grows together with *median house value* to the level where income money simply doesn't matter.  
+
+<center>
+ 
+```{r, echo=FALSE, fig.cap="PPD in groups", out.width = '100%'}
+knitr::include_graphics("images/2-2-pdp-groups.png")
+```
+</center>
+
+PDP makes it possible to create separate profiles for different groups of observation. In our case, we used *ocean proximity* as it is a categorical variable. In the plot above we can observe, that all profiles are similar to each other, the only significant difference is vertical shift. Conclusion drawn from this plot is the fact that houses *1h <Ocean* are most expensive, *inland* apartments are the cheapest, while *near ocean* and *near bay* behave similar to each other and have average prices. If we take a look at the plot from *Data* paragraph, conclusions look reasonable. *1h <Ocean* houses are the ones located in Los Angeles and in the suburbs of San Francisco, which are well known from expensive neighborhoods.   
+
 #### Global explanations conclusions
 
 
