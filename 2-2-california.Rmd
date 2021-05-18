@@ -100,11 +100,6 @@ knitr::include_graphics('images/2-2-lime.png')
 
 It follows that for the observations, the key variables are `median_income` and some kind of location. Additionally, plots show us that impact of `population`,`households` or `housing_median_age` is not significant.
 
-
-
-
-
-
 #### Ceteris Paribus
 
 **Intuition**
@@ -115,24 +110,25 @@ It follows that for the observations, the key variables are `median_income` and 
 
 <center>
  
-```{r, echo=FALSE, fig.cap="Ceteris Paribus: first observation", out.width = '100%'}
+```{r 2-2-single-ceteris, echo=FALSE, fig.cap="Ceteris Paribus: first observation", out.width = '100%'}
 knitr::include_graphics("images/2-2-single-ceteris.png")
 ```
 </center>
 
-Picture above shows *Ceteris Paribus* calculated for first observation of data set. As we can see, in most cases it is straight line with change for small values. *Households* and *population* profiles are similar, which seems to be reasonable, because not many people look for apartment in a remote area. *Latitude* and *longitude* profiles are vertical lines with one decrease. Hence, a region on map can separated where *median value* would be the highest. *Mean bedrooms* is hard to explain in the oposition to *mean rooms* where we can see that the more rooms the higher the value is. It stops at certain value, above which valuation doesn't change. *Median income* is almost linear function, which is understandable as rich people can afford expensive apartments.
+Plot \@ref(fig:2-2-single-ceteris) above shows *Ceteris Paribus* calculated for first observation of data set. As we can see, in most cases it is straight line with change for small values. *Households* and *population* profiles are similar, which seems to be reasonable, because not many people look for apartment in a remote area. *Latitude* and *longitude* profiles are vertical lines with one decrease. Hence, a region on map can separated where *median value* would be the highest. *Mean bedrooms* is hard to explain in the oposition to *mean rooms* where we can see that the more rooms the higher the value is. It stops at certain value, above which valuation doesn't change. *Median income* is almost linear function, which is understandable as rich people can afford expensive apartments.
 
 <center>
  
-```{r, echo=FALSE, fig.cap="Ceteris Paribus: first and 2000th observation", out.width = '100%'}
+```{r 2-2-double-ceteris, echo=FALSE, fig.cap="Ceteris Paribus: first and 2000th observation", out.width = '100%'}
 knitr::include_graphics("images/2-2-double-ceteris.png")
 ```
 </center>
 
-Next plot shows *Ceteris Paribus* calculated for two different observations. Specially two observations with massive difference in *median value* where chosen to observe what would change. Clear differences can be observed. Especially *latitude*, *mean bedrooms*, *mean rooms* and *population* shows major changes. Rest of variables have similar profiles, but these four are great example why shouldn't we draw conclusions about whole data set based on one *ceteris paribus* calculation.
+Next plot \@ref(fig:2-2-double-ceteris) shows *Ceteris Paribus* calculated for two different observations. Specially two observations with massive difference in *median value* where chosen to observe what would change. Clear differences can be observed. Especially *latitude*, *mean bedrooms*, *mean rooms* and *population* shows major changes. Rest of variables have similar profiles, but these four are great example why shouldn't we draw conclusions about whole data set based on one *ceteris paribus* calculation.
 
 #### Local explanations conclusions
 
+As it could be observed, local explanations tells a lot about given observation. Unfortunately, juxtaposition of two different observations showed us, that they can have totally different explanations. Hence, local XAI, in this case, would allow us to increase already built house's value rather than give an instruction how to build expensive property. To get this instruction global explanations should be used.  
 
 ### Global explanations
 
@@ -142,18 +138,18 @@ Next plot shows *Ceteris Paribus* calculated for two different observations. Spe
 
 **Intuition**
 
-PDP stands for partial dependence plot and it is connected with *Ceteris Paribus*. We take a random sample from data set, and calculate *ceteris paribus* for each one. After that, mean of all these functions is calculated, which leaves us with one profile for whole data set. In the plot below thick blue line is PDP and thin grey lines are *Ceteris Paribus* calculations for each observation.
+PDP [@xai1-pdp] stands for partial dependence plot and it is connected with *Ceteris Paribus*. We take a random sample from data set, and calculate *ceteris paribus* for each one. After that, mean of all these functions is calculated, which leaves us with one profile for whole data set. In the plot below thick blue line is PDP and thin grey lines are *Ceteris Paribus* calculations for each observation.
 
 **Results**
 
 <center>
  
-```{r, echo=FALSE, fig.cap="PPD", out.width = '100%'}
+```{r 2-2-pdp, echo=FALSE, fig.cap="PPD", out.width = '100%'}
 knitr::include_graphics("images/2-2-pdp.png")
 ```
 </center>
 
-As we can see, *households*, *mean bedrooms*, *mean rooms* and *population* profiles are almost straight lines with fluctuations for small values. *Housing median value* is a interesting case, because small curvature can be observed at the end of line. This is probably due to the fact that new apartments are expensive, because they are modern and old ones are expensive because of historical background behind they. *Latitude* shows that most expensive houses are located on south, especially below $34 ^{\circ} N$, in California this is area near Los Angeles. *Median house value* is highest for *longitude* values lower than $118 ^{\circ} E$ (majority of a state except of San Diego and surrounding area). As it was in *ceteris paribus*, *median income* grows together with *median house value* to the level where income money simply doesn't matter.  
+As we can see above \@ref(fig:2-2-pdp), *households*, *mean bedrooms*, *mean rooms* and *population* profiles are almost straight lines with fluctuations for small values. *Housing median value* is a interesting case, because small curvature can be observed at the end of line. This is probably due to the fact that new apartments are expensive, because they are modern and old ones are expensive because of historical background behind they. *Latitude* shows that most expensive houses are located on south, especially below $34 ^{\circ} N$, in California this is area near Los Angeles. *Median house value* is highest for *longitude* values lower than $118 ^{\circ} E$ (majority of a state except of San Diego and surrounding area). As it was in *ceteris paribus*, *median income* grows together with *median house value* to the level where income money simply doesn't matter.  
 
 <center>
  
