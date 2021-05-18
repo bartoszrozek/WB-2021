@@ -13,10 +13,10 @@ With the development of artificial intelligence and machine learning, the use of
 Using algorithms, we would like to know what influenced the prediction result and how. We are not inclined to trust such a difficult and complicated activity to algorithms whose decisions are unclear to human. Therefore, in this paper we use Explainable Artificial Intelligence (XAI) methods to analyze the output of the  black-box model. 
 
 
-#### Data
+**Data**
 
 The data that was used was the "California Housing Data Set".
-This data was initially featured in the following paper:[@pace1997sparse].The data pertains to the houses found in a given California district and some summary stats about them based on the 1990 census data. Data is cleaned, contains no empty information.
+This data was initially featured in the following paper:[@2-2-pace1997sparse].The data pertains to the houses found in a given California district and some summary stats about them based on the 1990 census data. Data is cleaned, contains no empty information.
 
 
 | Column title     | Description                                                                                                                    |
@@ -33,7 +33,7 @@ This data was initially featured in the following paper:[@pace1997sparse].The da
 | oceanProximity   | Location relative to the ocean described as however in the category: "NEAR BAY", "<1H OCEAN", "INLAND", "NEAR OCEAN", "ISLAND" |
 
 
-```{r HeatmapOfMedianHouseValue, out.width="500", fig.align="center", echo=FALSE, fig.cap='Map of property distribution within the state of California. The brightness of the points reflects the price.'}
+```{r 2-2-HeatmapOfMedianHouseValue, out.width="500", fig.align="center", echo=FALSE, fig.cap='Map of property distribution within the state of California. The brightness of the points reflects the price.'}
 knitr::include_graphics('images/2-2-HeatmapOfMedianHouseValue.png')
 ```
 
@@ -41,17 +41,17 @@ The map shows a density of bright blue dots in two locations, these are expensiv
 Also, more expensive properties are located along the Pacific coast.
 
 
-```{r OceanProximityOnMap, out.width="500", fig.align="center", echo=FALSE, fig.cap='Map of property distribution within the state of California. Colors show the value of the oceanProximity column.'}
+```{r 2-2-OceanProximityOnMap, out.width="500", fig.align="center", echo=FALSE, fig.cap='Map of property distribution within the state of California. Colors show the value of the oceanProximity column.'}
 knitr::include_graphics('images/2-2-OceanProximityOnMap.png')
 ```
 
-Property map, packing the OceanProximity feature. Properties with the NEAR BAY category colored blue, appear in only one grouping next to San Francisco, NEAR BAY means San Francisco Bay. Green category, ISLAND collects 10 properties located on one island near Los Angeles.
+Property map, packing the `ocean_proximity` feature. Properties with the 'NEAR BAY' category colored blue, appear in only one grouping next to San Francisco, `NEAR BAY` means San Francisco Bay. Green category, `ISLAND` collects 10 properties located on one island near Los Angeles.
 
-#### Machine learning model
+**Machine learning model**
 
-A random forest model was used to predict property values[@breiman1999random]. This model does not require scaling of data or decoding of categorical data. This makes it easier to analyze the results.
+A random forest model was used to predict property values[@2-2-breiman1999random]. This model does not require scaling of data or decoding of categorical data. This makes it easier to analyze the results.
 
-The two columns "total_bedrooms" and "total_rooms" were averaged by dividing by the number of household members. The new columns are "mean_bedrooms" and "mead_rooms". 
+The two columns `total_bedrooms` and `total_rooms` were averaged by dividing by the number of household members. The new columns are `mean_bedrooms` and `mead_rooms`. 
 
 ### Literature
 
@@ -65,6 +65,22 @@ knitr::include_graphics('images/2-2-map.png')
 ```
 
 #### Break Down
+
+**Intuition**
+
+Break down provides a way to show the local importance of variables and the effect of individual values on predictions[@iBreakDown].
+The basic idea is to calculate the contribution of variable in prediction of f(x) as changes in the expected model response given other variables. This means that we start with the mean expected model response of the model, successively adding variables to the conditioning. Of course, the order in which the variables are arranged also influences the contribution values.
+
+**Results**
+
+
+```{r 2-2-BreakDownProfile,out.width="100%", fig.align="center", echo=FALSE, fig.cap='Break Down decomposition (L) observation 1, (R) observation 2000'}
+knitr::include_graphics('images/2-2-BreakDownProfile.png')
+```
+
+Figure \@ref(fig:2-2-BreakDownProfile) shows the result of using Break Down method from DALEX [@dalex] package.
+The variables are ranked in terms of the importance of their impact on the predictions. The most important characteristic for both properties is `median income`. Median income is indicative of neighborhood status. Residents who earn more are likely to purchase more expensive properties. For both observations the influences are strong but opposite, high earnings for the first observation at \$83,000 per year have a positive influence. In contrast, for property number 2000, earnings around \$15 thousand per year are the reason why the model lowers the predicted price. 
+`Longitude` is the second significant feature. Average number of rooms and location relative to the ocean was also significant. Interestingly, in observation number 2000, the inland location raises the price. From the map \@ref(fig:2-2-HeatmapOfMedianHouseValue), it appears that it is the homes farthest from the ocean that are the cheapest, moreover, in the same case below \@ref(fig:2-2-lime) LIME found this location to be negative. 
 
 #### Lime
 
