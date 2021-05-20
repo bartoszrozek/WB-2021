@@ -134,6 +134,26 @@ As it could be observed, local explanations tells a lot about given observation.
 
 #### Feature Importance
 
+**Intuition**
+
+Idea of permutation-based variable-importance[@xailandscape]:
+If a variable is important in a model, then after its permutation the model prediction should be less precise. The permutation importance of a variable $k$  is the difference between model prediction for original data and prediction for data with permutation variable $k$.
+
+
+**Results**
+
+```{r 2-2-FeatureImportance,out.width="100%", fig.align="center", echo=FALSE, fig.cap='Feature Importance'}
+knitr::include_graphics('images/2-2-FeatureImportance.png')
+```
+
+`Median income ` turns out to be the most important feature for the model under study. Removing the median income information by permutations, resulted in the largest decrease in the RMSE measure. This means that without this feature the model is much less precise.
+The geographic variables, `longitude` `latitude` and `ocean proximity` also turn out to be important for prediction.
+The average number of rooms, age, and the number of householders already have less impact on the prediction.
+The `mean bedrooms` category has the smallest and ambiguous impact. Whiskers extending beyond the left border of the bars indicate that there were draws where removing the variable improved the model results. The model may ignore this feature, having partial information about it in the form of number of rooms and household members.  
+
+
+
+
 #### PDP
 
 **Intuition**
