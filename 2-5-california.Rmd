@@ -8,7 +8,7 @@
 
 Being able to predict the potential price of a house is crucial for the real estate market. Therefore, over the years, many papers have been focused on improving prediction methods [@2-5-housingprediction-ml1; @2-5-housingprediction-ml2]. The main question regarding forecasts is what data influences the price. In addition to physical factors of the house, such as size, number of rooms, the condition of the building, the price is also influenced by the area in which the house is located. The neighborhood affects the price of the house and the house affects the value of the surrounding buildings. Thus, house price prediction models based on neighborhood data were created [@2-5-neighborhood1; @2-5-neighborhood2; @2-5-neighborhood3].
 
-With the development of artificial intelligence and machine learning, the use of this type of algorithm is gaining popularity in the field of forecasting house prices [@2-5-housingprediction-ml1]. Black-box models is an important part of machine learning. However, unlike glass-box models, they do not have a clear, human-readable way of determining predictions [@EMA]. So why do we use them when we have glass-box models at our disposal? The complexity  of black-box models is both an advantage and disadvantage at the same time. Due to it, we get better, more tailored predictions, but we also doom ourselves to the lack of precise information on how the given result was obtained.
+With the development of artificial intelligence and machine learning, the use of this type of algorithm is gaining popularity in the field of forecasting house prices [@2-5-housingprediction-ml1]. In machine learning, we can distinguish two types of models: glass-box and black-box models. In the glass-box model human can follow the steps from inputs to outputs. Black-box models is also an important part of machine learning, however unlike glass-box models, they do not have a clear, human-readable way of determining predictions [@EMA]. So why do we use them when we have glass-box models at our disposal? The complexity  of black-box models is both an advantage and disadvantage at the same time. Due to it, we get better, more tailored predictions, but we also doom ourselves to the lack of precise information on how the given result was obtained.
 
 Using algorithms, we would like to know what influenced the prediction result and how. We are not inclined to trust such a difficult and complicated activity to algorithms whose decisions are unclear to human. Therefore, in this paper we use Explainable Artificial Intelligence (XAI) methods to analyze the output of the  black-box model. 
 
@@ -55,6 +55,14 @@ The two columns `total_bedrooms` and `total_rooms` were averaged by dividing by 
 
 ### Literature
 
+Over the years, many solutions have been developed for the task of house price prediction, and what particularly interests us, solutions using machine learning [@2-5-houseprediction-1; @2-5-housingprediction-ml1; @2-5-houseprediction-2]. However, in our paper we will not focus on the process of creating good models but on the process of explaining models and their results using XAI methods. 
+
+Why are these explanations so important? As we mentioned in the introduction, black box models do not give us insight into the reason for their decisions. As mentioned in the article [@XAI] that is one of the main barriers AI is facing nowadays. 
+
+However, not everyone supports the development of XAI [@2-5-against-xai1; @2-5-against-xai2 ; @2-5-againstxai3]. They point to the insufficient credibility of the explanations and the possibility that the model conceale his unethical behavior.
+
+The second issue addressed in our paper is the relationship of house price to location. Several works have been created on this topic as well. For example, Stephen Law in his work [@2-5-neighborhood1] proposed defining a street as a local area unit and measuring its effect on house price. The results of his research of Metropolitan London showed significant local area effects on house prices. In our case the local area unit is block, which is a rectangular area marked by intersecting streets.
+Another example is the article written by Robin A. Dubin [@2-5-neighborhood4]. He points out the importance of the correlations existing between the prices of neighboring houses, which is ignored in others method of predicting house values.
 
 ### Local explanations
 
