@@ -4,6 +4,8 @@
 
 ### Abstract
 
+*The value of a house is extremely important to all of us, no matter if we are buyers, sellers or homeowners. That is why correct price prediction is so important. With the help of machine learning we are able to predict this price but not every time we know what influenced such prediction result. For this reason, the interpretability of models, used in important areas of life, has recently become increasingly valuable. In this article we interpret and explain these unknowns using Explainable Artificial Intelligence (XAI) methods.*
+
 ### Introduction
 
 Being able to predict the potential price of a house is crucial for the real estate market. Therefore, over the years, many papers have been focused on improving prediction methods [@2-5-housingprediction-ml1; @2-5-housingprediction-ml2]. The main question regarding forecasts is what data influences the price. In addition to physical factors of the house, such as size, number of rooms, the condition of the building, the price is also influenced by the area in which the house is located. The neighborhood affects the price of the house and the house affects the value of the surrounding buildings. Thus, house price prediction models based on neighborhood data were created [@2-5-neighborhood1; @2-5-neighborhood2; @2-5-neighborhood3].
@@ -59,7 +61,7 @@ Over the years, many solutions have been developed for the task of house price p
 
 Why are these explanations so important? As we mentioned in the introduction, black box models do not give us insight into the reason for their decisions. As mentioned in the article [@XAI] that is one of the main barriers AI is facing nowadays. 
 
-However, not everyone supports the development of XAI [@2-5-against-xai1; @2-5-against-xai2 ; @2-5-againstxai3]. They point to the insufficient credibility of the explanations and the possibility that the model conceale his unethical behavior.
+However, not everyone supports the development of XAI [@2-5-against-xai1; @2-5-against-xai2 ; @2-5-againstxai3]. They point to the insufficient credibility of the explanations and the possibility that the model conceal his unethical behavior.
 
 The second issue addressed in our paper is the relationship of house price to location. Several works have been created on this topic as well. For example, Stephen Law in his work [@2-5-neighborhood1] proposed defining a street as a local area unit and measuring its effect on house price. The results of his research of Metropolitan London showed significant local area effects on house prices. In our case the local area unit is block, which is a rectangular area marked by intersecting streets.
 Another example is the article written by Robin A. Dubin [@2-5-neighborhood4]. He points out the importance of the correlations existing between the prices of neighboring houses, which is ignored in others method of predicting house values.
@@ -88,7 +90,7 @@ knitr::include_graphics('images/2-5-BreakDownProfile.png')
 
 Figure \@ref(fig:2-5-BreakDownProfile) shows the result of using Break Down method from DALEX [@dalex] package.
 The variables are ranked in terms of the importance of their impact on the predictions. The most important characteristic for both properties is `median income`. Median income is indicative of neighborhood status. Residents who earn more are likely to purchase more expensive properties. For both observations the influences are strong but opposite, high earnings for the first observation at \$83,000 per year have a positive influence. In contrast, for property number 2000, earnings around \$15 thousand per year are the reason why the model lowers the predicted price. 
-`Longitude` is the second significant feature. Average number of rooms and location relative to the ocean was also significant. Interestingly, in observation number 2000, the inland location raises the price. From the map \@ref(fig:2-5-HeatmapOfMedianHouseValue), it appears that it is the homes farthest from the ocean that are the cheapest, moreover, in the same case below \@ref(fig:2-5-lime) LIME found this location to be negative. 
+`Longitude` is the second significant feature. Average number of rooms and location relative to the ocean was also significant. Interestingly, in observation number 2000, the inland location raises the price. From the map \@ref(fig:2-5-HeatmapOfMedianHouseValue), it appears that it is the homes farthest from the ocean that are the cheapest.
 
 #### Lime
 
@@ -96,17 +98,19 @@ The variables are ranked in terms of the importance of their impact on the predi
 
 Local Interpretable Model-agnostic Explanations (LIME) was firstly proposed by Ribeiro, Singh, and Guestrin [@lime].
 
-In LIME decomposition, our goal is to create an approximate glass-box model for a given observation. That model would be fully human-readable and can be easier analized. To do so, we create an artificial data set and teach the chosen glass-box model on it. The coefficients on the variables for the created model are the coefficients on the validity of the variables for our observation.
+In LIME decomposition, our goal is to create an approximate glass-box model for a given observation. That model would be fully human-readable and can be easier analyzed. To do so, we create an artificial data set and teach the chosen glass-box model on it. The coefficients on the variables for the created model are the coefficients on the validity of the variables for our observation.
 
 **Results**
-
-Figure \@ref(fig:2-5-lime) shows the result of using LIME method [@lime] from DALEX [@dalex] package. Common for both observations is that the `median_income` variable has the largest effect on prediction. However, the impact in the case 1 is large positive but in the case 2000 it is large negative. It is caused by the value of the variable. It is worth noting that the variables longitude and latitude have opposite signs in both cases. This is because these variables are negatively correlated \@ref(fig:????). The second most valuable variable is the map location variable. 
 
 ```{r 2-5-lime, out.width="1000", fig.align="center", echo=FALSE, fig.cap='Lime decomposition  (L) observation 1, (R) observation 2000'}
 knitr::include_graphics('images/2-5-lime.png')
 ```
 
-It follows that for the observations, the key variables are `median_income` and some kind of location. Additionally, plots show us that impact of `population`,`households` or `housing_median_age` is not significant.
+Figure above \@ref(fig:2-5-lime) shows the result of using LIME method [@lime] from DALEX [@dalex] package. Common for both observations is that the `median_income` variable has the largest effect on prediction. However, the impact in the case 1 is large positive but in the case 2000 it is large negative. It is caused by the value of the variable. It is worth noting that the variables longitude and latitude have opposite signs in both cases. This is because these variables are negatively correlated. The second most valuable variable is the map location variable. 
+
+It follows that for the observations, the key variables are `median_income` and some kind of location. This is consistent with our expectation and intuition that the higher the earnings of residents, the richer and more valued the neighborhood. Consequently, the houses themselves are also priced higher. Additionally, plots show us that impact of `population`,`households` or `housing_median_age` is not significant. 
+
+What is interesting, in the case 2000 above \@ref(fig:2-5-BreakDownProfile) BreakDown found this location to be positive. 
 
 #### Ceteris Paribus
 
@@ -139,6 +143,8 @@ Next plot \@ref(fig:2-5-double-ceteris) shows *Ceteris Paribus* calculated for t
 As it could be observed, local explanations tells a lot about given observation. Unfortunately, juxtaposition of two different observations showed us, that they can have totally different explanations. Hence, local XAI, in this case, would allow us to increase already built house's value rather than give an instruction how to build expensive property. To get this instruction global explanations should be used.  
 
 ### Global explanations
+
+In global explanations, we want to find out what influenced the model as a whole in the data, rather than looking at individual observations. This gives us an overall view of the predictions for the population.
 
 #### Feature Importance
 
