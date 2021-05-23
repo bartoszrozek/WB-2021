@@ -51,7 +51,8 @@ Property map, packing the `ocean_proximity` feature. Properties with the 'NEAR B
 
 **Machine learning model**
 
-A random forest model was used to predict property values[@2-5-breiman1999random]. This model does not require scaling of data or decoding of categorical data. This makes it easier to analyze the results.
+The machine learning model explained is from https://www.kaggle.com/camnugent/introduction-to-machine-learning-in-r-tutorial.
+A random forest model[@2-5-breiman1999random] from the "randomForest" library with default parameters was used to predict property values. This model does not require scaling of data or decoding of categorical data. This makes it easier to analyze the results.
 
 The two columns `total_bedrooms` and `total_rooms` were averaged by dividing by the number of household members. The new columns are `mean_bedrooms` and `mead_rooms`. 
 
@@ -127,7 +128,7 @@ knitr::include_graphics("images/2-5-single-ceteris.png")
 ```
 </center>
 
-Plot \@ref(fig:2-5-single-ceteris) above shows *Ceteris Paribus* calculated for first observation of data set. As we can see, in most cases it is straight line with change for small values. *Households* and *population* profiles are similar, which seems to be reasonable, because not many people look for apartment in a remote area. *Latitude* and *longitude* profiles are vertical lines with one decrease. Hence, a region on map can separated where *median value* would be the highest. *Mean bedrooms* is hard to explain in the oposition to *mean rooms* where we can see that the more rooms the higher the value is. It stops at certain value, above which valuation doesn't change. *Median income* is almost linear function, which is understandable as rich people can afford expensive apartments.
+Plot \@ref(fig:2-5-single-ceteris) above shows *Ceteris Paribus* calculated for first observation of data set. As we can see, in most cases it is straight line with change for small values. `Households` and `population` profiles are similar, which seems to be reasonable, because not many people look for apartment in a remote area. `Latitude` and `longitude` profiles are vertical lines with one decrease. Hence, a region on map can separated where `median value` would be the highest.`Mean bedrooms` is hard to explain in the oposition to `mean rooms` where we can see that the more rooms the higher the value is. It stops at certain value, above which valuation doesn't change. `Median income` is almost linear function, which is understandable as rich people can afford expensive apartments.
 
 <center>
  
@@ -136,7 +137,7 @@ knitr::include_graphics("images/2-5-double-ceteris.png")
 ```
 </center>
 
-Next plot \@ref(fig:2-5-double-ceteris) shows *Ceteris Paribus* calculated for two different observations. Specially two observations with massive difference in *median value* where chosen to observe what would change. Clear differences can be observed. Especially *latitude*, *mean bedrooms*, *mean rooms* and *population* shows major changes. Rest of variables have similar profiles, but these four are great example why shouldn't we draw conclusions about whole data set based on one *ceteris paribus* calculation.
+Next plot \@ref(fig:2-5-double-ceteris) shows *Ceteris Paribus* calculated for two different observations. Specially two observations with massive difference in `median value` where chosen to observe what would change. Clear differences can be observed. Especially `latitude`, `mean bedrooms`, `mean rooms` and *population* shows major changes. Rest of variables have similar profiles, but these four are great example why shouldn't we draw conclusions about whole data set based on one *ceteris paribus* calculation.
 
 #### Local explanations conclusions
 
@@ -160,7 +161,7 @@ If a variable is important in a model, then after its permutation the model pred
 knitr::include_graphics('images/2-5-FeatureImportance.png')
 ```
 
-`Median income ` turns out to be the most important feature for the model under study. Removing the median income information by permutations, resulted in the largest decrease in the RMSE measure. This means that without this feature the model is much less precise.
+Plot \@ref(fig:2-5-FeatureImportance)  show, `Median income ` turns out to be the most important feature for the model under study. Removing the median income information by permutations, resulted in the largest decrease in the RMSE measure. This means that without this feature the model is much less precise.
 The geographic variables, `longitude` `latitude` and `ocean proximity` also turn out to be important for prediction.
 The average number of rooms, age, and the number of householders already have less impact on the prediction.
 The `mean bedrooms` category has the smallest and ambiguous impact. Whiskers extending beyond the left border of the bars indicate that there were draws where removing the variable improved the model results. The model may ignore this feature, having partial information about it in the form of number of rooms and household members.  
@@ -183,7 +184,7 @@ knitr::include_graphics("images/2-5-pdp.png")
 ```
 </center>
 
-As we can see above \@ref(fig:2-5-pdp), *households*, *mean bedrooms*, *mean rooms* and *population* profiles are almost straight lines with fluctuations for small values. *Housing median value* is a interesting case, because small curvature can be observed at the end of line. This is probably due to the fact that new apartments are expensive, because they are modern and old ones are expensive because of historical background behind they. *Latitude* shows that most expensive houses are located on south, especially below $34 ^{\circ} N$, in California this is area near Los Angeles. *Median house value* is highest for *longitude* values lower than $118 ^{\circ} E$ (majority of a state except of San Diego and surrounding area). As it was in *ceteris paribus*, *median income* grows together with *median house value* to the level where income money simply doesn't matter.  
+As we can see above \@ref(fig:2-5-pdp), `households`, `mean bedrooms`, `mean rooms` and `population` profiles are almost straight lines with fluctuations for small values. `Housing median value` is a interesting case, because small curvature can be observed at the end of line. This is probably due to the fact that new apartments are expensive, because they are modern and old ones are expensive because of historical background behind they. `Latitude` shows that most expensive houses are located on south, especially below $34 ^{\circ} N$, in California this is area near Los Angeles. `Median house value` is highest for `longitude` values lower than $118 ^{\circ} E$ (majority of a state except of San Diego and surrounding area). As it was in *ceteris paribus*, `median income` grows together with `median house value` to the level where income money simply doesn't matter.  
 
 <center>
  
@@ -192,12 +193,15 @@ knitr::include_graphics("images/2-5-pdp-groups.png")
 ```
 </center>
 
-PDP makes it possible to create separate profiles for different groups of observation. In our case, we used *ocean proximity* as it is a categorical variable. In the plot above we can observe, that all profiles are similar to each other, the only significant difference is vertical shift. Conclusion drawn from this plot is the fact that houses *1h <Ocean* are most expensive, *inland* apartments are the cheapest, while *near ocean* and *near bay* behave similar to each other and have average prices. If we take a look at the plot from *Data* paragraph, conclusions look reasonable. *1h <Ocean* houses are the ones located in Los Angeles and in the suburbs of San Francisco, which are well known from expensive neighborhoods.   
+PDP makes it possible to create separate profiles for different groups of observation. In our case, we used `ocean proximity` as it is a categorical variable. In the plot above we can observe, that all profiles are similar to each other, the only significant difference is vertical shift. Conclusion drawn from this plot is the fact that houses `1h <Ocean` are most expensive, `inland` apartments are the cheapest, while `near ocean` and `near bay` behave similar to each other and have average prices. If we take a look at the plot from *Data* paragraph, conclusions look reasonable. `1h <Ocean` houses are the ones located in Los Angeles and in the suburbs of San Francisco, which are well known from expensive neighborhoods.   
 
 #### Global explanations conclusions
+
+In contrast to local explanations, global explanations give a more general picture of the entire data set. With PDP profiles, we can see the relationships between the data. The future importance graph allows understanding what variables are relevant to the model. 
 
 
 ### Conclusion
 
-
+XAI methods can have multiple applications. They allow to study the behavior of Machine Learning Models. It gives an opportunity to understand the model, detect errors, for example, made during data preprocessing. 
+With a good model matched to the data, XAI can be used to study the dependencies in the data.
 
