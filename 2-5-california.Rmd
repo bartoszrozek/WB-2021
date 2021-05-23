@@ -60,7 +60,7 @@ The two columns `total_bedrooms` and `total_rooms` were averaged by dividing by 
 
 Over the years, many solutions have been developed for the task of house price prediction, and what particularly interests us, solutions using machine learning [@2-5-houseprediction-1; @2-5-housingprediction-ml1; @2-5-houseprediction-2]. However, in our paper we will not focus on the process of creating good models but on the process of explaining models and their results using XAI methods. 
 
-Why are these explanations so important? As we mentioned in the introduction, black box models do not give us insight into the reason for their decisions. As mentioned in the article [@XAI] that is one of the main barriers AI is facing nowadays. 
+Why are these explanations so important? As we mentioned in the introduction, black box models do not give us insight into the reason for their decisions. As mentioned in the article [@2-5-XAI] that is one of the main barriers AI is facing nowadays. 
 
 However, not everyone supports the development of XAI [@2-5-against-xai1; @2-5-against-xai2 ; @2-5-againstxai3]. They point to the insufficient credibility of the explanations and the possibility that the model conceal his unethical behavior.
 
@@ -79,7 +79,7 @@ knitr::include_graphics('images/2-5-map.png')
 
 **Intuition**
 
-Break down provides a way to show the local importance of variables and the effect of individual values on predictions[@iBreakDown].
+Break down provides a way to show the local importance of variables and the effect of individual values on predictions[@2-5-iBreakDown].
 The basic idea is to calculate the contribution of variable in prediction of f(x) as changes in the expected model response given other variables. This means that we start with the mean expected model response of the model, successively adding variables to the conditioning. Of course, the order in which the variables are arranged also influences the contribution values.
 
 **Results**
@@ -97,7 +97,7 @@ The variables are ranked in terms of the importance of their impact on the predi
 
 **Intuition**
 
-Local Interpretable Model-agnostic Explanations (LIME) was firstly proposed by Ribeiro, Singh, and Guestrin [@lime].
+Local Interpretable Model-agnostic Explanations (LIME) was firstly proposed by Ribeiro, Singh, and Guestrin [@2-5-lime].
 
 In LIME decomposition, our goal is to create an approximate glass-box model for a given observation. That model would be fully human-readable and can be easier analyzed. To do so, we create an artificial data set and teach the chosen glass-box model on it. The coefficients on the variables for the created model are the coefficients on the validity of the variables for our observation.
 
@@ -151,7 +151,7 @@ In global explanations, we want to find out what influenced the model as a whole
 
 **Intuition**
 
-Idea of permutation-based variable-importance[@xailandscape]:
+Idea of permutation-based variable-importance[@2-5-xailandscape]:
 If a variable is important in a model, then after its permutation the model prediction should be less precise. The permutation importance of a variable $k$  is the difference between model prediction for original data and prediction for data with permutation variable $k$.
 
 
