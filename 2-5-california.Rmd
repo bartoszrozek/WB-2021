@@ -69,20 +69,17 @@ Another example is the article written by Robin A. Dubin [@2-5-neighborhood4]. H
 
 ### Local explanations
 
+Local explanations tells us, how model behaves in the area near given observation. Hence, it can not be used to explain how model works for whole set. On the other hand, it is useful to find out what can be done to change model's prediction for observations we already have in our data set.
 We used observation 1 and 2000, because they are far from each other in the set so that they have different value.
 
 ```{r 2-5-local-map,out.width="1000", fig.align="center", echo=FALSE, fig.cap='Choosen observations presented on a map. Red point - observation 1, green point - observation 2000'}
 knitr::include_graphics('images/2-5-map.png')
 ```
 
-#### Break Down
-
-**Intuition**
+**Break Down**
 
 Break down provides a way to show the local importance of variables and the effect of individual values on predictions[@2-5-iBreakDown].
 The basic idea is to calculate the contribution of variable in prediction of f(x) as changes in the expected model response given other variables. This means that we start with the mean expected model response of the model, successively adding variables to the conditioning. Of course, the order in which the variables are arranged also influences the contribution values.
-
-**Results**
 
 
 ```{r 2-5-BreakDownProfile,out.width="100%", fig.align="center", echo=FALSE, fig.cap='Break Down decomposition (L) observation 1, (R) observation 2000'}
@@ -93,15 +90,11 @@ Figure \@ref(fig:2-5-BreakDownProfile) shows the result of using Break Down meth
 The variables are ranked in terms of the importance of their impact on the predictions. The most important characteristic for both properties is `median income`. Median income is indicative of neighborhood status. Residents who earn more are likely to purchase more expensive properties. For both observations the influences are strong but opposite, high earnings for the first observation at \$83,000 per year have a positive influence. In contrast, for property number 2000, earnings around \$15 thousand per year are the reason why the model lowers the predicted price. 
 `Longitude` is the second significant feature. Average number of rooms and location relative to the ocean was also significant. Interestingly, in observation number 2000, the inland location raises the price. From the map \@ref(fig:2-5-HeatmapOfMedianHouseValue), it appears that it is the homes farthest from the ocean that are the cheapest.
 
-#### Lime
-
-**Intuition**
+**Lime**
 
 Local Interpretable Model-agnostic Explanations (LIME) was firstly proposed by Ribeiro, Singh, and Guestrin [@2-5-lime].
 
 In LIME decomposition, our goal is to create an approximate glass-box model for a given observation. That model would be fully human-readable and can be easier analyzed. To do so, we create an artificial data set and teach the chosen glass-box model on it. The coefficients on the variables for the created model are the coefficients on the validity of the variables for our observation.
-
-**Results**
 
 ```{r 2-5-lime, out.width="1000", fig.align="center", echo=FALSE, fig.cap='Lime decomposition  (L) observation 1, (R) observation 2000'}
 knitr::include_graphics('images/2-5-lime.png')
@@ -113,13 +106,9 @@ It follows that for the observations, the key variables are `median_income` and 
 
 What is interesting, in the case 2000 above \@ref(fig:2-5-BreakDownProfile) BreakDown found this location to be positive. 
 
-#### Ceteris Paribus
-
-**Intuition**
+**Ceteris Paribus**
 
 *Ceteris Paribus* is a phrase that comes from Latin. Word for word meaning is "other things equal", but in XAI much more meaningful translation would be "other things held constant". In fact, these few words describe this method deeply - we choose one variable from observation, change it's value, while other variables held constant and calculate new model's prediction. Output of this operation is a function that shows us how prediction changes.
-
-**Results**
 
 <center>
  
@@ -128,7 +117,7 @@ knitr::include_graphics("images/2-5-single-ceteris.png")
 ```
 </center>
 
-Plot \@ref(fig:2-5-single-ceteris) above shows *Ceteris Paribus* calculated for first observation of data set. As we can see, in most cases it is straight line with change for small values. `Households` and `population` profiles are similar, which seems to be reasonable, because not many people look for apartment in a remote area. `Latitude` and `longitude` profiles are vertical lines with one decrease. Hence, a region on map can separated where `median value` would be the highest.`Mean bedrooms` is hard to explain in the oposition to `mean rooms` where we can see that the more rooms the higher the value is. It stops at certain value, above which valuation doesn't change. `Median income` is almost linear function, which is understandable as rich people can afford expensive apartments.
+Plot \@ref(fig:2-5-single-ceteris) above shows *Ceteris Paribus* calculated for first observation of data set. As we can see, in most cases it is straight line with change for small values. `Households` and `population` profiles are similar, which seems to be reasonable, because not many people look for apartment in a remote area. `Latitude` and `longitude` profiles are vertical lines with one decrease. Hence, a region on map can separated where `median value` would be the highest.`Mean rooms` is hard to explain in the opposition to `mean bedrooms` where we can see that the more bedrooms the higher the value is. It stops at certain value, above which valuation doesn't change. `Median income` is almost linear function, which is understandable as rich people can afford expensive apartments.
 
 <center>
  
@@ -139,29 +128,25 @@ knitr::include_graphics("images/2-5-double-ceteris.png")
 
 Next plot \@ref(fig:2-5-double-ceteris) shows *Ceteris Paribus* calculated for two different observations. Specially two observations with massive difference in `median value` where chosen to observe what would change. Clear differences can be observed. Especially `latitude`, `mean bedrooms`, `mean rooms` and *population* shows major changes. Rest of variables have similar profiles, but these four are great example why shouldn't we draw conclusions about whole data set based on one *ceteris paribus* calculation.
 
-#### Local explanations conclusions
+**Local explanations conclusions**
 
 As it could be observed, local explanations tells a lot about given observation. Unfortunately, juxtaposition of two different observations showed us, that they can have totally different explanations. Hence, local XAI, in this case, would allow us to increase already built house's value rather than give an instruction how to build expensive property. To get this instruction global explanations should be used.  
 
 ### Global explanations
 
-In global explanations, we want to find out what influenced the model as a whole in the data, rather than looking at individual observations. This gives us an overall view of the predictions for the population.
+In global explanations, we want to find out what influenced the model as a whole in the data, rather than looking at individual observations. This gives us an overall view of the predictions for the population. We can use this information to construct new observation with desirable value of target variable.
 
-#### Feature Importance
-
-**Intuition**
+**Feature Importance**
 
 Idea of permutation-based variable-importance[@2-5-xailandscape]:
 If a variable is important in a model, then after its permutation the model prediction should be less precise. The permutation importance of a variable $k$  is the difference between model prediction for original data and prediction for data with permutation variable $k$.
 
 
-**Results**
-
 ```{r 2-5-FeatureImportance,out.width="100%", fig.align="center", echo=FALSE, fig.cap='Feature Importance'}
 knitr::include_graphics('images/2-5-FeatureImportance.png')
 ```
 
-Plot \@ref(fig:2-5-FeatureImportance)  show, `Median income ` turns out to be the most important feature for the model under study. Removing the median income information by permutations, resulted in the largest decrease in the RMSE measure. This means that without this feature the model is much less precise.
+Plot \@ref(fig:2-5-FeatureImportance) show, `Median income ` turns out to be the most important feature for the model under study. Removing the median income information by permutations, resulted in the largest decrease in the RMSE measure. This means that without this feature the model is much less precise.
 The geographic variables, `longitude` `latitude` and `ocean proximity` also turn out to be important for prediction.
 The average number of rooms, age, and the number of householders already have less impact on the prediction.
 The `mean bedrooms` category has the smallest and ambiguous impact. Whiskers extending beyond the left border of the bars indicate that there were draws where removing the variable improved the model results. The model may ignore this feature, having partial information about it in the form of number of rooms and household members.  
@@ -169,13 +154,9 @@ The `mean bedrooms` category has the smallest and ambiguous impact. Whiskers ext
 
 
 
-#### PDP
-
-**Intuition**
+**PDP**
 
 PDP [@xai1-pdp] stands for partial dependence plot and it is connected with *Ceteris Paribus*. We take a random sample from data set, and calculate *ceteris paribus* for each one. After that, mean of all these functions is calculated, which leaves us with one profile for whole data set. In the plot below thick blue line is PDP and thin grey lines are *Ceteris Paribus* calculations for each observation.
-
-**Results**
 
 <center>
  
@@ -195,7 +176,7 @@ knitr::include_graphics("images/2-5-pdp-groups.png")
 
 PDP makes it possible to create separate profiles for different groups of observation. In our case, we used `ocean proximity` as it is a categorical variable. In the plot above we can observe, that all profiles are similar to each other, the only significant difference is vertical shift. Conclusion drawn from this plot is the fact that houses `1h <Ocean` are most expensive, `inland` apartments are the cheapest, while `near ocean` and `near bay` behave similar to each other and have average prices. If we take a look at the plot from *Data* paragraph, conclusions look reasonable. `1h <Ocean` houses are the ones located in Los Angeles and in the suburbs of San Francisco, which are well known from expensive neighborhoods.   
 
-#### Global explanations conclusions
+**Global explanations conclusions**
 
 In contrast to local explanations, global explanations give a more general picture of the entire data set. With PDP profiles, we can see the relationships between the data. The future importance graph allows understanding what variables are relevant to the model. 
 
