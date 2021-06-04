@@ -185,6 +185,10 @@ In contrast to local explanations, global explanations give a more general pictu
 
 ### Conclusion
 
-XAI methods can have multiple applications. They allow to study the behavior of Machine Learning Models. It gives an opportunity to understand the model, detect errors, for example, made during data preprocessing. 
-With a good model matched to the data, XAI can be used to study the dependencies in the data.
+XAI methods can have multiple applications. They allow to study the behavior of Machine Learning Models. It gives an opportunity to understand the model, detect errors, for example, made during data preprocessing.With a good model matched to the data, XAI can be used to study the dependencies in the data.
 
+In this paper using XAI methods we made local and global explanations for the random forest model and 1990 California house data. This allowed us to bring the black box model closer to an interpretable as we learned the approximate effects of the variables on the prediction output. All the methods we used, Break Down, Lime, Ceteris Paribus for local explanations and Feature Importance, PDP for global explanations, indicated `median income` as the variable with the greatest influence on the prediction score. By combining the XAI methods with the results of the EDA analysis, we were able to observe and intuitively explain the findings.
+
+In the local explanations section we took a closer look at two very different observations and tested at the observation level how their variable values, affected the prediction outcome, and in the global explanations section we took a broader look at the whole set and the performance of the model for the whole data set.
+
+In summary, our results provide insight into the value of using XAI methods to better understand black box models used for real-world problems such as, in our case, the real estate market and the impact of location-specific factors on house price.
