@@ -106,7 +106,7 @@ Figure above \@ref(fig:2-5-lime) shows the result of using LIME method [@lime] f
 
 It follows that for the observations, the key variables are `median_income` and some kind of location. This is consistent with our expectation and intuition that the higher the earnings of residents, the richer and more valued the neighborhood. Consequently, the houses themselves are also priced higher. Additionally, plots show us that impact of `population`,`households` or `housing_median_age` is not significant. 
 
-What is interesting, in the case 2000 above \@ref(fig:2-5-BreakDownProfile) BreakDown found this location to be positive. 
+What is interesting, in the case 2000 above \@ref(fig:2-5-BreakDownProfile) BreakDown as opposed to LIME found the location `ocean_proximity = INLAND` to be positive. 
 
 **Ceteris Paribus**
 
@@ -128,7 +128,7 @@ knitr::include_graphics("images/2-5-double-ceteris.png")
 ```
 </center>
 
-Next plot \@ref(fig:2-5-double-ceteris) shows *Ceteris Paribus* calculated for two different observations. Specially two observations with massive difference in `median value` where chosen to observe what would change. Clear differences can be observed. Especially `latitude`, `mean bedrooms`, `mean rooms` and *population* shows major changes. Rest of variables have similar profiles, but these four are great example why shouldn't we draw conclusions about whole data set based on one *ceteris paribus* calculation.
+Next plot \@ref(fig:2-5-double-ceteris) shows *Ceteris Paribus* calculated for two different observations. Specially two observations with massive difference in `median value` where chosen to observe what would change. Clear differences can be observed. Especially `latitude`, `mean bedrooms`, `mean rooms` and `population` shows major changes. Rest of variables have similar profiles, but these four are great example why shouldn't we draw conclusions about whole data set based on one *ceteris paribus* calculation.
 
 **Local explanations conclusions**
 
@@ -189,6 +189,6 @@ XAI methods can have multiple applications. They allow to study the behavior of 
 
 In this paper using XAI methods we made local and global explanations for the random forest model and 1990 California house data. This allowed us to bring the black box model closer to an interpretable as we learned the approximate effects of the variables on the prediction output. All the methods we used, Break Down, Lime, Ceteris Paribus for local explanations and Feature Importance, PDP for global explanations, indicated `median income` as the variable with the greatest influence on the prediction score. By combining the XAI methods with the results of the EDA analysis, we were able to observe and intuitively explain the findings.
 
-In the local explanations section we took a closer look at two very different observations and tested at the observation level how their variable values, affected the prediction outcome, and in the global explanations section we took a broader look at the whole set and the performance of the model for the whole data set.
+In the local explanations section we took a closer look at two very different observations and tested at the observation level how their variable values, affected the prediction outcome, and in the global explanations section we took a broader look at the performance of the model for the whole data set.
 
 In summary, our results provide insight into the value of using XAI methods to better understand black box models used for real-world problems such as, in our case, the real estate market and the impact of location-specific factors on house price.
