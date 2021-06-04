@@ -17,8 +17,9 @@ Using algorithms, we would like to know what influenced the prediction result an
 
 **Data**
 
-The data that was used was the "California Housing Data Set".
-This data was initially featured in the following paper:[@2-5-pace1997sparse].The data pertains to the houses found in a given California district and some summary stats about them based on the 1990 census data. Data is cleaned, contains no empty information.
+The data that was used was the *California Housing Data Set*.
+This data was initially featured in the following paper:[@2-5-pace1997sparse].The data pertains to the houses found in a given California district and some summary stats about them based on the 1990 census data. Data is cleaned, contains no empty information. Table 1 shows the explanation of each variable.
+
 
 
 | Column title     | Description                                                                                                                    |
@@ -33,13 +34,14 @@ This data was initially featured in the following paper:[@2-5-pace1997sparse].Th
 | medianIncome     | Median income for households within a block of houses (measured in tens of thousands of US Dollars)                            |
 | medianHouseValue | Median house value for households within a block (measured in US Dollars)                                                      |
 | oceanProximity   | Location relative to the ocean described as however in the category: "NEAR BAY", "<1H OCEAN", "INLAND", "NEAR OCEAN", "ISLAND" |
+Table: Table 1: the meaning of the variables in the data set 
 
 
 ```{r 2-5-HeatmapOfMedianHouseValue, out.width="500", fig.align="center", echo=FALSE, fig.cap='Map of property distribution within the state of California. The brightness of the points reflects the price.'}
 knitr::include_graphics('images/2-5-HeatmapOfMedianHouseValue.png')
 ```
 
-The map shows a density of bright blue dots in two locations, these are expensive properties located within two urban centers, Los Angeles, San Francisco, and San Diego.
+The map \@ref(fig:2-5-HeatmapOfMedianHouseValue) shows a density of bright blue dots in two locations, these are expensive properties located within two urban centers, Los Angeles, San Francisco, and San Diego.
 Also, more expensive properties are located along the Pacific coast.
 
 
@@ -47,12 +49,12 @@ Also, more expensive properties are located along the Pacific coast.
 knitr::include_graphics('images/2-5-OceanProximityOnMap.png')
 ```
 
-Property map, packing the `ocean_proximity` feature. Properties with the 'NEAR BAY' category colored blue, appear in only one grouping next to San Francisco, `NEAR BAY` means San Francisco Bay. Green category, `ISLAND` collects 10 properties located on one island near Los Angeles.
+Property map \@ref(fig:2-5-OceanProximityOnMap), packing the `ocean_proximity` feature. Properties with the 'NEAR BAY' category colored blue, appear in only one grouping next to San Francisco, `NEAR BAY` means San Francisco Bay. Green category, `ISLAND` collects 10 properties located on one island near Los Angeles.
 
 **Machine learning model**
 
 The machine learning model explained is from https://www.kaggle.com/camnugent/introduction-to-machine-learning-in-r-tutorial.
-A random forest model[@2-5-breiman1999random] from the "randomForest" library with default parameters was used to predict property values. This model does not require scaling of data or decoding of categorical data. This makes it easier to analyze the results.
+A random forest model[@2-5-breiman1999random] from the randomForest [@2-5-randomForest-lib] library with parameters *(ntree = 500, importance = TRUE)* was used to predict property values. This model does not require scaling of data or decoding of categorical data. This makes it easier to analyze the results.
 
 The two columns `total_bedrooms` and `total_rooms` were averaged by dividing by the number of household members. The new columns are `mean_bedrooms` and `mead_rooms`. 
 
@@ -62,7 +64,7 @@ Over the years, many solutions have been developed for the task of house price p
 
 Why are these explanations so important? As we mentioned in the introduction, black box models do not give us insight into the reason for their decisions. As mentioned in the article [@2-5-XAI] that is one of the main barriers AI is facing nowadays. 
 
-However, not everyone supports the development of XAI [@2-5-against-xai1; @2-5-against-xai2 ; @2-5-againstxai3]. They point to the insufficient credibility of the explanations and the possibility that the model conceal his unethical behavior.
+However, not everyone supports the development of XAI [@2-5-againstxai1; @2-5-againstxai2 ; @2-5-againstxai3]. They point to the insufficient credibility of the explanations and the possibility that the model conceal his unethical behavior.
 
 The second issue addressed in our paper is the relationship of house price to location. Several works have been created on this topic as well. For example, Stephen Law in his work [@2-5-neighborhood1] proposed defining a street as a local area unit and measuring its effect on house price. The results of his research of Metropolitan London showed significant local area effects on house prices. In our case the local area unit is block, which is a rectangular area marked by intersecting streets.
 Another example is the article written by Robin A. Dubin [@2-5-neighborhood4]. He points out the importance of the correlations existing between the prices of neighboring houses, which is ignored in others method of predicting house values.
@@ -70,7 +72,7 @@ Another example is the article written by Robin A. Dubin [@2-5-neighborhood4]. H
 ### Local explanations
 
 Local explanations tells us, how model behaves in the area near given observation. Hence, it can not be used to explain how model works for whole set. On the other hand, it is useful to find out what can be done to change model's prediction for observations we already have in our data set.
-We used observation 1 and 2000, because they are far from each other in the set so that they have different value.
+We used observation 1 and 2000, because they are far from each other in the set so that they have different value.The location of the selected property is shown on the map \@ref(fig:2-5-local-map)
 
 ```{r 2-5-local-map,out.width="1000", fig.align="center", echo=FALSE, fig.cap='Choosen observations presented on a map. Red point - observation 1, green point - observation 2000'}
 knitr::include_graphics('images/2-5-map.png')
@@ -79,7 +81,7 @@ knitr::include_graphics('images/2-5-map.png')
 **Break Down**
 
 Break down provides a way to show the local importance of variables and the effect of individual values on predictions[@2-5-iBreakDown].
-The basic idea is to calculate the contribution of variable in prediction of f(x) as changes in the expected model response given other variables. This means that we start with the mean expected model response of the model, successively adding variables to the conditioning. Of course, the order in which the variables are arranged also influences the contribution values.
+The basic idea is to calculate the contribution of variable in prediction of $f(x)$ as changes in the expected model response given other variables. This means that we start with the mean expected model response of the model, successively adding variables to the conditioning. Of course, the order in which the variables are arranged also influences the contribution values.
 
 
 ```{r 2-5-BreakDownProfile,out.width="100%", fig.align="center", echo=FALSE, fig.cap='Break Down decomposition (L) observation 1, (R) observation 2000'}
@@ -138,7 +140,7 @@ In global explanations, we want to find out what influenced the model as a whole
 
 **Feature Importance**
 
-Idea of permutation-based variable-importance[@2-5-xailandscape]:
+Idea of permutation-based variable-importance[@2-5-fisher2019all]:
 If a variable is important in a model, then after its permutation the model prediction should be less precise. The permutation importance of a variable $k$  is the difference between model prediction for original data and prediction for data with permutation variable $k$.
 
 
@@ -169,12 +171,12 @@ As we can see above \@ref(fig:2-5-pdp), `households`, `mean bedrooms`, `mean roo
 
 <center>
  
-```{r, echo=FALSE, fig.cap="PPD in groups", out.width = '100%'}
+```{r 2-5-pdp-groups, echo=FALSE, fig.cap="PPD in groups", out.width = '100%'}
 knitr::include_graphics("images/2-5-pdp-groups.png")
 ```
 </center>
 
-PDP makes it possible to create separate profiles for different groups of observation. In our case, we used `ocean proximity` as it is a categorical variable. In the plot above we can observe, that all profiles are similar to each other, the only significant difference is vertical shift. Conclusion drawn from this plot is the fact that houses `1h <Ocean` are most expensive, `inland` apartments are the cheapest, while `near ocean` and `near bay` behave similar to each other and have average prices. If we take a look at the plot from *Data* paragraph, conclusions look reasonable. `1h <Ocean` houses are the ones located in Los Angeles and in the suburbs of San Francisco, which are well known from expensive neighborhoods.   
+PDP makes it possible to create separate profiles for different groups of observation. In our case, we used `ocean proximity` as it is a categorical variable. In the plot \@ref(fig:2-5-pdp-groups) above we can observe, that all profiles are similar to each other, the only significant difference is vertical shift. Conclusion drawn from this plot is the fact that houses `1h <Ocean` are most expensive, `inland` apartments are the cheapest, while `near ocean` and `near bay` behave similar to each other and have average prices. If we take a look at the plot from *Data* paragraph, conclusions look reasonable. `1h <Ocean` houses are the ones located in Los Angeles and in the suburbs of San Francisco, which are well known from expensive neighborhoods.   
 
 **Global explanations conclusions**
 
