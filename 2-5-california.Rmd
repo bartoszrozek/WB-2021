@@ -12,29 +12,19 @@ Being able to predict the potential price of a house is crucial for the real est
 
 With the development of artificial intelligence and machine learning, the use of this type of algorithm is gaining popularity in the field of forecasting house prices [@2-5-housingprediction-ml1]. In machine learning, we can distinguish two types of models: glass-box and black-box models. In the glass-box model human can follow the steps from inputs to outputs. Black-box models is also an important part of machine learning, however unlike glass-box models, they do not have a clear, human-readable way of determining predictions [@EMA]. So why do we use them when we have glass-box models at our disposal? The complexity  of black-box models is both an advantage and disadvantage at the same time. Due to it, we get better, more tailored predictions, but we also doom ourselves to the lack of precise information on how the given result was obtained.
 
-Using algorithms, we would like to know what influenced the prediction result and how. We are not inclined to trust such a difficult and complicated activity to algorithms whose decisions are unclear to human. Therefore, in this paper we use Explainable Artificial Intelligence (XAI) methods to analyze the output of the  black-box model. 
+Using algorithms, we would like to know what influenced the prediction result and how. We are not inclined to trust such a difficult and complicated activity to algorithms whose decisions are unclear to human. Therefore, in this paper we use Explainable Artificial Intelligence (XAI) [@2-5-xailandscape] methods to analyze the output of the  black-box model. 
 
 
 **Data**
 
 The data that was used was the *California Housing Data Set*.
-This data was initially featured in the following paper:[@2-5-pace1997sparse].The data pertains to the houses found in a given California district and some summary stats about them based on the 1990 census data. Data is cleaned, contains no empty information. Table 1 shows the explanation of each variable.
+This data was initially featured in the following paper:[@2-5-pace1997sparse].The data pertains to the houses found in a given California district and some summary stats about them based on the 1990 census data. Data is cleaned, contains no empty information. Table \@ref(fig:2-5-ColumnDescription) shows the explanation of each variable.
+
+```{r 2-5-ColumnDescription, out.width="1000", fig.align="center", echo=FALSE, fig.cap= 'Meaning of the variables in the California Housing Data Set'}
+knitr::include_graphics('images/2-5-ColumnDescription.png')
+```
 
 
-
-| Column title     | Description                                                                                                                    |
-|------------------|--------------------------------------------------------------------------------------------------------------------------------|
-| longitude        | A measure of how far west a house is; a higher value is farther west                                                           |
-| latitude         | A measure of how far north a house is; a higher value is farther north                                                         |
-| housingMedianAge | Median age of a house within a block; a lower number is a newer building                                                       |
-| totalRooms       | Total number of rooms within a block                                                                                           |
-| totalBedrooms    | Total number of bedrooms within a block                                                                                        |
-| population       | Total number of people residing within a block                                                                                 |
-| households       | Total number of households, a group of people residing within a home unit, for a block                                         |
-| medianIncome     | Median income for households within a block of houses (measured in tens of thousands of US Dollars)                            |
-| medianHouseValue | Median house value for households within a block (measured in US Dollars)                                                      |
-| oceanProximity   | Location relative to the ocean described as however in the category: "NEAR BAY", "<1H OCEAN", "INLAND", "NEAR OCEAN", "ISLAND" |
-Table: Table 1: the meaning of the variables in the data set 
 
 
 ```{r 2-5-HeatmapOfMedianHouseValue, out.width="500", fig.align="center", echo=FALSE, fig.cap='Map of property distribution within the state of California. The brightness of the points reflects the price.'}
@@ -72,11 +62,17 @@ Another example is the article written by Robin A. Dubin [@2-5-neighborhood4]. H
 ### Local explanations
 
 Local explanations tells us, how model behaves in the area near given observation. Hence, it can not be used to explain how model works for whole set. It is useful to find out what can be done to change model's prediction for observations we already have in our data set.
-We used observation 1 and 2000, because they are far from each other in the set so that they have different value.The location of the selected property is shown on the map \@ref(fig:2-5-local-map)
+We used observation 1 and 2000, because they are far from each other in the set so that they have different value.The location of the selected property is shown on the map \@ref(fig:2-5-local-map), the precise data for these properties is shown in the table \@ref(fig:2-5-Housing-1-and-2000)
 
 ```{r 2-5-local-map,out.width="1000", fig.align="center", echo=FALSE, fig.cap='Choosen observations presented on a map. Red point - observation 1, green point - observation 2000'}
 knitr::include_graphics('images/2-5-map.png')
 ```
+
+
+```{r 2-5-Housing-1-and-2000,out.width="1000", fig.align="center", echo=FALSE, fig.cap='Precise data of two selected observations analyzed by local explanations, observations with numbers 1 and 2000'}
+knitr::include_graphics('images/2-5-Housing-1-and-2000.png')
+```
+
 
 **Break Down**
 
@@ -102,7 +98,7 @@ In LIME decomposition, our goal is to create an approximate glass-box model for 
 knitr::include_graphics('images/2-5-lime.png')
 ```
 
-Figure above \@ref(fig:2-5-lime) shows the result of using LIME method [@lime] from DALEX [@dalex] package. Common for both observations is that the `median_income` variable has the largest effect on prediction. However, the impact in the case 1 is large positive but in the case 2000 it is large negative. It is caused by the value of the variable. It is worth noting that the variables longitude and latitude have opposite signs in both cases. This is because these variables are negatively correlated. The second most valuable variable is the map location variable. 
+Figure above \@ref(fig:2-5-lime) shows the result of using LIME method [@2-5-lime] from DALEX [@dalex] package. Common for both observations is that the `median_income` variable has the largest effect on prediction. However, the impact in the case 1 is large positive but in the case 2000 it is large negative. It is caused by the value of the variable. It is worth noting that the variables longitude and latitude have opposite signs in both cases. This is because these variables are negatively correlated. The second most valuable variable is the map location variable. 
 
 It follows that for the observations, the key variables are `median_income` and some kind of location. This is consistent with our expectation and intuition that the higher the earnings of residents, the richer and more valued the neighborhood. Consequently, the houses themselves are also priced higher. Additionally, plots show us that impact of `population`,`households` or `housing_median_age` is not significant. 
 
