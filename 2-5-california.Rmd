@@ -80,7 +80,7 @@ Break down provides a way to show the local importance of variables and the effe
 The basic idea is to calculate the contribution of variable in prediction of $f(x)$ as changes in the expected model response given other variables. This means that we start with the mean expected model response of the model, successively adding variables to the conditioning. Of course, the order in which the variables are arranged also influences the contribution values.
 
 
-```{r 2-5-BreakDownProfile,out.width="100%", fig.align="center", echo=FALSE, fig.cap='Break Down decomposition for (L) observation 1, (R) observation 2000. Model is a random forest. Bars show the contributions of the variables. Green indicates positive impact on the house value, while red indicates negative impact. First bar starts at the value of the mean expected model response. The last,blue bar indicates the difference between this mean response and the model prediction for the choosen observation. '}
+```{r 2-5-BreakDownProfile,out.width="100%", fig.align="center", echo=FALSE, fig.cap='Break Down decomposition for (L) observation 1, (R) observation 2000. Bars show the contributions of the variables. Green indicates positive impact on the house value, while red indicates negative impact. First bar starts at the value of the mean expected model response.The last, blue bar indicates the difference between this mean response and the model prediction for the choosen observation. '}
 knitr::include_graphics('images/2-5-BreakDownProfile.png')
 ```
 
@@ -94,7 +94,7 @@ Local Interpretable Model-agnostic Explanations (LIME) was firstly proposed by R
 
 In LIME decomposition, our goal is to create an approximate glass-box model for an area around given observation. That model would be fully human-readable and can be easier analyzed. To do so, we create an artificial data set and teach the chosen glass-box model on it. The coefficients on the variables for the created model are the coefficients on the validity of the variables for our observation.
 
-```{r 2-5-lime, out.width="1000", fig.align="center", echo=FALSE, fig.cap='Lime decomposition for (L) observation 1, (R) observation 2000. Model is a random forest. The size of the bar indicates the magnitude of the the estimated coefficient. Features with blue bar have positive sign of the estimated coefficient and feature with red bar have negative sign of the estimated coefficient. '}
+```{r 2-5-lime, out.width="1000", fig.align="center", echo=FALSE, fig.cap='Lime decomposition for (L) observation 1, (R) observation 2000. The size of the bar indicates the magnitude of the the estimated coefficient. Features with blue bar have positive sign of the estimated coefficient and feature with red bar have negative sign of the estimated coefficient. '}
 knitr::include_graphics('images/2-5-lime.png')
 ```
 
@@ -140,7 +140,7 @@ Idea of permutation-based variable-importance[@2-5-fisher2019all]:
 If a variable is important in a model, then after its permutation the model prediction should be less precise. The permutation importance of a variable $k$  is the difference between model prediction for original data and prediction for data with permutation variable $k$.
 
 
-```{r 2-5-FeatureImportance,out.width="100%", fig.align="center", echo=FALSE, fig.cap='Feature Importance'}
+```{r 2-5-FeatureImportance,out.width="100%", fig.align="center", echo=FALSE, fig.cap='Feature Importance plot shows the root mean square error after 10 parmutation of every variable. Bars indicate the mean value of RMSE and at the ends of the bars are boxplots created from all permutation results. '}
 knitr::include_graphics('images/2-5-FeatureImportance.png')
 ```
 
@@ -158,7 +158,7 @@ PDP [@xai1-pdp] stands for partial dependence plot and it is connected with *Cet
 
 <center>
  
-```{r 2-5-pdp, echo=FALSE, fig.cap="PPD", out.width = '100%'}
+```{r 2-5-pdp, echo=FALSE, fig.cap="Partial-dependance profiles (PDP). Grey lines are Ceteris Paribus profiles for each calculations, and blue line is PDP (mean of all Ceteris Paribus functions). The line indicates the change in prediction when the value of the variable changes. ", out.width = '100%'}
 knitr::include_graphics("images/2-5-pdp.png")
 ```
 </center>
@@ -167,7 +167,7 @@ As we can see above \@ref(fig:2-5-pdp), `households`, `mean bedrooms`, `mean roo
 
 <center>
  
-```{r 2-5-pdp-groups, echo=FALSE, fig.cap="PPD in groups", out.width = '100%'}
+```{r 2-5-pdp-groups, echo=FALSE, fig.cap="Partial-dependence profiles for separate ocean proximity values. Each line of a different color corresponds to a PDP for observations belonging to one category.", out.width = '100%'}
 knitr::include_graphics("images/2-5-pdp-groups.png")
 ```
 </center>
