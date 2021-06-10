@@ -100,7 +100,7 @@ knitr::include_graphics('images/2-5-lime.png')
 
 Figure above \@ref(fig:2-5-lime) shows the result of using LIME method [@2-5-lime] from DALEX [@dalex] package. Common for both observations is that the `median_income` variable has the largest effect on prediction. However, the impact in the case 1 is large positive but in the case 2000 it is large negative. It is caused by the value of the variable. It is worth noting that the variables longitude and latitude have opposite signs in both cases. This is because these variables are negatively correlated. The second most valuable variable is the map location variable. 
 
-It follows that for the observations, the key variables are `median_income` and some kind of location. This is consistent with our expectation and intuition that the higher the earnings of residents, the richer and more valued the neighborhood. Consequently, the houses themselves are also priced higher. Additionally, plots show us that impact of `population`,`households` or `housing_median_age` is not significant. 
+It follows that for the observations, the key variables are `median_income` and some kind of location. This is consistent with our expectation and intuition that the higher the earnings of residents, the richer and more valued the neighborhood. Consequently, the houses themselves are also priced higher. Additionally, plots show us that impact of `population`or `households` is not significant. 
 
 What is interesting, in the case 2000 above \@ref(fig:2-5-BreakDownProfile) BreakDown as opposed to LIME found the location `ocean_proximity = INLAND` to be positive. 
 
