@@ -149,6 +149,8 @@ The geographic variables, `longitude` `latitude` and `ocean proximity` also turn
 The average number of rooms, age, and the number of householders already have less impact on the prediction.
 The `mean bedrooms` category has the smallest and ambiguous impact. Whiskers extending beyond the left border of the bars indicate that there were draws where removing the variable improved the model results. The model may ignore this feature, having partial information about it in the form of number of rooms and household members.  
 
+If we go back to *Break down* section, we can observe a few similarities. First of all, `median income` is very important for valuation in *Break down* and is in the first place in *feature importance's* ranking. After that, on following places there are features related to geographic location. In general, they are important for *Break down* as well. If we take a look on 
+bottom part of *feature importance* plot, three worst features - `mean bedrooms`, `population` and `households` have tiny contribution for both *Break down's* cases. To sum up, these methods gives similar results and differences are due to different samples (one observation vs whole data set).
 
 
 
